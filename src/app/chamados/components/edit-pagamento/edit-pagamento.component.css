@@ -1,0 +1,28 @@
+div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+}
+
+
+#salvar {
+  margin-top: 8px;
+}
+
+#menu {
+  margin-left: auto;
+}
+
+#inputPagamento::-webkit-outer-spin-button,
+#inputPagamento::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

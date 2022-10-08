@@ -1,0 +1,83 @@
+<app-navbar>
+  <div class="container">
+    <div class="cards">
+      <div class="card card-RECEBIDO mat-elevation-z5">
+
+        <div class="valueText">
+          <p class="number">{{chamadoStatus[0]}}</p>
+          <p class="titleNumber">Chamados Recebidos</p>
+        </div>
+        <div class="icon">
+          <mat-icon>create_new_folder</mat-icon>
+        </div>
+      </div>
+      <div class="card card-ATRIBUIDO mat-elevation-z5">
+        <div class="valueText">
+          <p class="number">{{chamadoStatus[1]}}</p>
+          <p>Chamados Atribuidos</p>
+        </div>
+        <div class="icon">
+          <mat-icon>how_to_reg</mat-icon>
+        </div>
+      </div>
+      <div class="card card-CONCLUIDO mat-elevation-z5">
+        <div class="valueText">
+          <p class="number">{{chamadoStatus[2]}}</p>
+          <p>Chamados Concluidos</p>
+        </div>
+        <div class="icon">
+          <mat-icon>verified</mat-icon>
+        </div>
+      </div>
+      <div class="card card-ARQUIVADO mat-elevation-z5">
+        <div class="valueText">
+          <p class="number">{{chamadoStatus[3]}}</p>
+          <p>Chamados Arquivados</p>
+        </div>
+        <div class="icon">
+          <mat-icon>folder_copy</mat-icon>
+        </div>
+      </div>
+
+
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <ng-container matColumnDef="funcionario">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Funcionarios
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element[0]}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="atribuidos">
+        <th class="ATRIBUIDO" mat-header-cell *matHeaderCellDef mat-sort-header>
+          Chamados Atribuidos
+        </th>
+        <td mat-cell *matCellDef="let element">{{element[1]}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="concluidos">
+        <th class="CONCLUIDO" mat-header-cell *matHeaderCellDef mat-sort-header>
+          Chamados Concluidos
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element[2]}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="arquivados">
+        <th class="ARQUIVADO" mat-header-cell *matHeaderCellDef mat-sort-header>
+          Chamados Arquivados
+        </th>
+        <td mat-cell *matCellDef="let element">{{element[3]}}</td>
+      </ng-container>
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Total
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element[4]}}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</app-navbar>

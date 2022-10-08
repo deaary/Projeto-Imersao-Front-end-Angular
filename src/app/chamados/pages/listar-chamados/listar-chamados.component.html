@@ -1,0 +1,115 @@
+<app-navbar [titulo]="'Chamados'">
+  <main>
+    <button type="button" mat-mini-fab (click)="cadastrarChamado()" matTooltip="Cadastrar Chamado"
+      [matTooltipPosition]="'left'" id="add">
+      <mat-icon>add</mat-icon>
+    </button>
+    <table mat-table [dataSource]="chamados" multiTemplateDataRows class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> # </th>
+        <td mat-cell *matCellDef="let chamado"> {{chamado.idChamado}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="titulo">
+        <th mat-header-cell *matHeaderCellDef> Título </th>
+        <td mat-cell *matCellDef="let chamado"> {{chamado.titulo}} </td>
+      </ng-container>
+
+      <ng-container *ngIf="!mobileQuery.matches" matColumnDef="data">
+        <th mat-header-cell *matHeaderCellDef> Data </th>
+        <td mat-cell *matCellDef="let chamado"> {{chamado.dataEntrada | date:'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <ng-container *ngIf="!mobileQuery.matches" matColumnDef="funcionario">
+        <th mat-header-cell *matHeaderCellDef> Funcionario </th>
+        <td mat-cell *matCellDef="let chamado"> {{chamado.funcionario?.nome??'Não Atribuido'}} </td>
+      </ng-container>
+
+      <ng-container *ngIf="!mobileQuery.matches" matColumnDef="cliente">
+        <th mat-header-cell *matHeaderCellDef> Cliente </th>
+        <td mat-cell *matCellDef="let chamado"> {{chamado.cliente.nome}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let chamado">
+          <p class="status" [ngClass]="chamado.status">{{chamado.status}} </p>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="pagamento">
+        <th mat-header-cell *matHeaderCellDef> Pagamento </th>
+        <td mat-cell *matCellDef="let chamado">
+          <div *ngIf="chamado.pagamento!=null;else pagamentoNE">
+            {{chamado.pagamento.status}}
+            <button (click)="edit(chamado.pagamento)" mat-icon-button matTooltip="Editar Pagamento"
+              [matTooltipPosition]="'right'">
+              <mat-icon>edit_note</mat-icon>
+            </button>
+          </div>
+          <ng-template #pagamentoNE>
+            <button (click)="addPagamento(chamado.idChamado)" mat-icon-button matTooltip="Adicionar Pagamento"
+              [matTooltipPosition]="'left'">
+              <mat-icon>add</mat-icon>
+            </button>
+          </ng-template>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let chamado">
+          <button mat-icon-button matTooltip="Editar Chamado" (click)="alterarChamado(chamado)"
+            [matTooltipPosition]="'left'">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" type="button" (click)="deletarChamado(chamado.idChamado)"
+            matTooltip="Deletar Chamado" [matTooltipPosition]="'right'">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="expand" cssClassFriendlyName="teste">
+        <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+        <td mat-cell *matCellDef="let element" class="arrowButton">
+          <button mat-icon-button aria-label="expand row"
+            (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()"
+            matTooltip="Mais Informaçoes" [matTooltipPosition]="'right'">
+            <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+            <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let chamado" [attr.colspan]="columnsToDisplayWithExpand.length">
+          <div class="element-detail" [@detailExpand]="chamado == expandedElement ? 'expanded' : 'collapsed'">
+            <div>
+              <ng-container *ngIf="mobileQuery.matches">
+                <p><span>Funcionario:</span>{{chamado.funcionario?.nome??'Não atribuido'}}</p>
+                <p><span>Cliente:</span>{{chamado.cliente.nome}}</p>
+                <p><span>Data:</span>{{chamado.dataEntrada | date:'dd/MM/yyyy'}}</p>
+              </ng-container>
+              <p><span>Descrição: </span>{{chamado?.descricao??""}}</p>
+              <ng-container *ngIf="chamado.pagamento!=null;else pagamentoNulo">
+                <p><span>Valor:</span>{{chamado.pagamento.valor|currency}}</p>
+                <p><span>Forma de pagamento:</span>{{chamado.pagamento.formPagamento}}</p>
+                <p><span>Status:</span>{{chamado.pagamento.status}}</p>
+              </ng-container>
+              <ng-template #pagamentoNulo>
+                <p><span>Pagamento:</span>Não cadastrado</p>
+              </ng-template>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row
+        *matHeaderRowDef="mobileQuery.matches?columnsToDisplayWithExpandMobile:columnsToDisplayWithExpand"></tr>
+      <tr mat-row
+        *matRowDef="let element; columns: mobileQuery.matches?columnsToDisplayWithExpandMobile:columnsToDisplayWithExpand;"
+        class="example-element-row" [class.example-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+
+    </table>
+  </main>
+</app-navbar>

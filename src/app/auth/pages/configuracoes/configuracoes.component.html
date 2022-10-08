@@ -1,0 +1,14 @@
+<app-navbar>
+  <div class="container">
+    <main class="mat-elevation-z5">
+      <div class="options mat-elevation-z4">
+        <a routerLink="/auth/configuracoes/alterar-senha" routerLinkActive="active">Alterar Senha</a>
+        <a routerLink="/auth/configuracoes/cadastrar-usuario" routerLinkActive="active">Cadastrar Usuário</a>
+        <a routerLink="/auth/configuracoes/desativar-conta" routerLinkActive="active">Desativar Conta</a>
+      </div>
+      <div class="content-container">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</app-navbar>

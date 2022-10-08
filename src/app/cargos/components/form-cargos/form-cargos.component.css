@@ -1,0 +1,23 @@
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: fit-content;
+}
+
+#salvar {
+    margin-top: 8px;
+}
+
+div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+#inputSalario::-webkit-outer-spin-button,
+#inputSalario::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

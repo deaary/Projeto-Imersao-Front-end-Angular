@@ -1,0 +1,38 @@
+<div>
+  <h2>{{funcionario.nome}}</h2>
+  <mat-spinner color="accent" mode="indeterminate" diameter="20" *ngIf="salvandoFuncionario"></mat-spinner>
+  <button (click)="close()" type="button" mat-icon-button>
+    <mat-icon>arrow_forward</mat-icon>
+  </button>
+</div>
+<section mat-dialog-content>
+  <form action="" [formGroup]="formFuncionario" (ngSubmit)="salvarAtualizacoes()">
+    <img [src]="imagePreview || '/assets/no-profile.png'" id="image-preview">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Nome</mat-label>
+      <input type="text" placeholder="Ex: João Pedro" matInput formControlName="nome">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>E-mail</mat-label>
+      <input type="email" placeholder="Ex: seuemail@mail.com" matInput formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Cargo</mat-label>
+      <mat-select formControlName="idCargo" name="cargo">
+        <mat-option></mat-option>
+        <mat-option *ngFor="let cargo of cargos" [value]="cargo.idCargo">
+          {{cargo.nome}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <input type="file" accept="image/*" id="file-input" #fileInput (change)="recuperarFoto($event)"
+      formControlName="foto">
+    <button type="button" mat-stroked-button color="primary" (click)="fileInput.click()">Selecione uma imagem</button>
+
+    <button type="submit" [disabled]="desabilitar" mat-raised-button color="accent" id="salvar">Salvar</button>
+
+  </form>
+</section>
